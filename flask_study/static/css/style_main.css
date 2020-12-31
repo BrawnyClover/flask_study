@@ -1,0 +1,142 @@
+body {
+    min-width: 350px;
+    padding: 0px;
+    margin: 0;
+    margin-bottom: 0;
+}
+
+header {
+    background: #140202;
+    color: white;
+    text-align: center;
+    min-height: 20vh;
+    max-height: 150px;
+    vertical-align: middle;
+    position: relative;
+}
+
+header>div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -59%);
+}
+
+main {
+    text-align: left;
+    height: max-content;
+    background: #260303;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 10px;
+    font-size: small;
+}
+
+footer {
+    background: #140202;
+    color: white;
+    width: 100%;
+    clear: both;
+    text-align: center;
+    min-height: 15vh;
+    max-height: 120px;
+    vertical-align: middle;
+    position: relative;
+}
+
+footer>div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -59%);
+}
+
+h1 {
+    margin: 0;
+}
+
+#left_box {
+    float: left;
+    width: 60%;
+}
+
+#right_box {
+    float: right;
+    width: 40%;
+}
+
+
+/*
+#0a0a12 10, 10, 18
+#16151f 22, 21, 31
+*/
+
+form {
+    padding-top: 40px;
+    margin-left: 20px;
+}
+
+form legend {
+    display: block;
+    padding: 0 0 5px 15px;
+    color: rgba(255, 255, 255, .5);
+    font-size: 10pt;
+    font-weight: 100;
+}
+
+form input {
+    display: block;
+    width: 80%;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, .1);
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: 100;
+    font-size: 10pt;
+    transition: all 0.2s;
+}
+
+form button {
+    display: block;
+    /*width: 30%;*/
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    background-color: #777777;
+    border: 10px;
+    border-color: white;
+    border-radius: 10px;
+    color: white;
+    font-weight: 100;
+    font-size: 8pt;
+    transition: all 0.1s;
+}
+
+form button:hover {
+    background-color: #aaaaaa;
+    border: 10px;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+#signin {
+    width: 100%;
+    height: 100%;
+    /*background-image: url('../img/bg-codebakery2.jpg');*/
+    background-size: cover;
+    background-position: center;
+}
+
+.main-container {
+    margin: auto;
+    width: 400px;
+    height: 300px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+}
