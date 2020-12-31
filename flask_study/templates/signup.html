@@ -1,0 +1,14 @@
+{% extends 'layout.html' %} {% block content %}
+<div>
+    <h1>Editor</h1>
+    <form action="/signup" method="POST">
+        <legend> NAME</legend>
+        <input type="text" name="username">
+        <legend> EMAIL</legend>
+        <input type="text" name="email">
+        <legend> PASSWORD</legend>
+        <input type="text" name="password">
+        <button type="submit"> 회원가입</button>
+    </form>
+</div>
+{% endblock %}

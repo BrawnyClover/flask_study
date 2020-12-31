@@ -1,4 +1,4 @@
-from flask_study import app
+from flask_study import app, db
 
 if __name__ == "__main__":
     app.debug = True

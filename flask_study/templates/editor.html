@@ -1,0 +1,12 @@
+{% extends 'layout.html' %} {% block content %}
+<div>
+    <h1>Editor</h1>
+    <form action="edit_post" method="POST">
+        <legend> Title</legend>
+        <input type="text" name="title">
+        <legend> Article</legend>
+        <input type="text" name="article">
+        <button type="submit"> 저장</button>
+    </form>
+</div>
+{% endblock %}
