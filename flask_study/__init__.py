@@ -62,13 +62,20 @@ def login():
     for user in data:
         if user.check_password(passw) is True:
             login_success = True
+            current_user = user
 
     if login_success is True : 
         session['logged_in'] = True
+        session['user_email'] = email
+        session['username'] = current_user.username
         return redirect(url_for('home'))
     else :
         return "<div>"+email+"</div>"+"<div>"+passw+"</div>"
-    
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('home'))
 
 @app.route('/about')
 def about():
@@ -78,6 +85,22 @@ def about():
 def editor():
     return render_template('editor.html')
 
+@app.route('/edit_post', methods=['GET','POST'])
+def edit_post():
+    user_email = session['user_email']
+    title = request.form['title']
+    article = request.form['article']
+
+    author = User.query.filter_by(email=user_email).first()
+    
+    new_post = Post(title=title, content=article, author=author)
+
+    try: 
+        db.session.add(new_post)
+        db.session.commit()
+    except:
+        db.session().rollback()
+    return redirect(url_for('home'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -95,3 +118,5 @@ def signup():
         except:
             db.session().rollback()
         return redirect(url_for('home'))
+
+    

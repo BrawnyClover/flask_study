@@ -12,55 +12,52 @@
 <body>
 
     {% extends 'layout.html' %} {% block content %}
-    <main>
-        <div>
-            <h1>Posts</h1>
-            <div id="left_box">
-                {% for post in posts %}
-                <article>
-                    <hr>
-                    <div class="row">
-                        <div class="col">
-                            <a class="h1" href="#">{{ post.title }}</a>
-                            <p class="text-justify">{{ post.content }}</p>
-                        </div>
-                        <div class="col-md-2 d-flex flex-column">
-                            <img class="rounded-circle mx-auto" src="{{ url_for('static', filename='sources/' + post.author.profile_image)}}" data-src="holder.js/64x64" width="64px" height="64px">
-                            <p class="text-muted text-center">{{ post.author.username }}</p>
-                        </div>
+
+    <div id="index_main">
+        <h1>Posts</h1>
+        <div id="left_box">
+            {% for post in posts %}
+            <article>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <a class="h1" href="#">{{ post.title }}</a>
+                        <p class="text-justify">{{ post.content }}</p>
                     </div>
-                    <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-                </article>
-                {% endfor %}
-            </div>
-            <div id="right_box">
-                <div class="main-container">
-                    <div class="loginform" style="overflow: hidden">
-                        <form name="login" action="login" method="post" accept-charset="utf-8">
-                            <!-- <ul name="loginUl">
-                                <li><label for="usermail">Email</label>
-                                    <input type="email" name="usermail" placeholder="yourname@email.com" required></li>
-                                <li><label for="password">Password</label>
-                                    <input type="password" name="password" placeholder="password" required></li>
-                                <li>
-                                    <input type="submit" value="Login"></li>
-                            </ul> -->
-                            <div class="signin-form">
-                                <form action="/user/signin" method="POST">
-                                    <legend> EMAIL</legend>
-                                    <input type="email" name="email">
-                                    <legend> PASSWORD</legend>
-                                    <input type="password" name="password">
-                                    <button type="submit"> 로그인</button>
-                                </form>
-                            </div>
-                        </form>
+                    <div class="col-md-2 d-flex flex-column">
+                        <img class="rounded-circle mx-auto" src="{{ url_for('static', filename='sources/' + post.author.profile_image)}}" data-src="holder.js/64x64" width="64px" height="64px">
+                        <p class="text-muted text-center">{{ post.author.username }}</p>
                     </div>
                 </div>
-            </div>
+                <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            </article>
+            {% endfor %}
         </div>
+        <div id="right_box">
+            {% if session['logged_in'] == True %}
+            <p>Welcome {{ session['username'] }}!</p>
+            <p><a href="/logout">Log out</a></p>
+            {% else %}
+            <div class="main-container">
+                <div class="loginform" style="overflow: hidden">
+                    <form name="login" action="login" method="post" accept-charset="utf-8">
+                        <div class="signin-form">
+                            <form action="/user/signin" method="POST">
+                                <legend> EMAIL</legend>
+                                <input type="email" name="email">
+                                <legend> PASSWORD</legend>
+                                <input type="password" name="password">
+                                <button type="submit"> 로그인</button>
+                            </form>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 
-    </main>
+
     {% endblock %}
 
     <footer>
