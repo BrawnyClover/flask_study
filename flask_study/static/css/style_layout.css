@@ -13,6 +13,7 @@ header>div {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -59%);
+    font-size: x-large;
 }
 
 footer {
@@ -37,10 +38,17 @@ footer>div {
 main {
     text-align: left;
     height: max-content;
-    background: #260303;
     color: rgba(255, 255, 255, 0.6);
 }
 
 h1 {
     margin: 0px;
+}
+
+body {
+    min-width: 350px;
+    padding: 0px;
+    margin: 0;
+    margin-bottom: 0;
+    background: #260303;
 }

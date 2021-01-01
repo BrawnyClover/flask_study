@@ -3,9 +3,11 @@
     <h1>Editor</h1>
     <form action="edit_post" method="POST">
         <legend> Title</legend>
-        <input type="text" name="title">
+        <input type="text" name="title" style="width:95%">
         <legend> Article</legend>
-        <input id="article" type="text" name="article">
+        <textarea id="article" cols="80" rows="10" type="text" name="article" style="vertical-align:top; width:95%; height:500px; background-color:rgba(255,255,255,0.6); color:#260303">
+        </textarea>
+        <br>
         <button type="submit"> 저장</button>
         <input type="hidden" name="author" value="{{ session['username'] }}">
     </form>

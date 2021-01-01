@@ -1,10 +1,3 @@
-body {
-    min-width: 350px;
-    padding: 0px;
-    margin: 0;
-    margin-bottom: 0;
-}
-
 #index_main {
     text-align: left;
     height: max-content;
@@ -98,7 +91,6 @@ form button:hover {
 #signin {
     width: 100%;
     height: 100%;
-    /*background-image: url('../img/bg-codebakery2.jpg');*/
     background-size: cover;
     background-position: center;
 }
@@ -110,4 +102,8 @@ form button:hover {
     overflow: hidden;
     background: rgba(0, 0, 0, 0.4);
     border-radius: 20px;
+}
+
+a.h1 {
+    margin-bottom: 1px;
 }
