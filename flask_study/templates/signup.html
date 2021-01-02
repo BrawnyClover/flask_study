@@ -1,14 +1,82 @@
+<head>
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script>
+        function getThumbnailPrivew() {
+            var filesToUpload = document.getElementById('image_file').files;
+            var file = filesToUpload[0];
+            console.log(file);
+            // 파일을 읽을 수 있는 File Reader 를 생성합니다
+            var reader = new FileReader();
+            // 파일이 읽혀지면 아래 함수가 실행됩니다
+            var resizedImage;
+            reader.readAsDataURL(file);
+            reader.onload = function() {
+                var img = new Image();
+                img.src = reader.result;
+                img.onload = function() {
+                    console.log("image loaded");
+                    var canvas = document.createElement("canvas");
+                    var ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0);
+                    var MAX_WIDTH = 200;
+                    var MAX_HEIGHT = 200;
+                    var width = img.width;
+                    var height = img.height;
+                    console.log(width, height);
+                    canvas.width = 200;
+                    canvas.height = 200;
+                    var ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, 100, 100);
+                    var dataurl = canvas.toDataURL("image/png");
+
+                    $("#thumbnail").attr('src', dataurl);
+
+                    var resizedImage = dataURLToBlob(dataurl);
+                };
+            };
+
+        }
+        var dataURLToBlob = function(dataURL) {
+            var BASE64_MARKER = ';base64,';
+            if (dataURL.indexOf(BASE64_MARKER) == -1) {
+                var parts = dataURL.split(',');
+                var contentType = parts[0].split(':')[1];
+                var raw = parts[1];
+                return new Blob([raw], {
+                    type: contentType
+                });
+            }
+            var parts = dataURL.split(BASE64_MARKER);
+            var contentType = parts[0].split(':')[1];
+            var raw = window.atob(parts[1]);
+            var rawLength = raw.length;
+            var uInt8Array = new Uint8Array(rawLength);
+            for (var i = 0; i < rawLength; ++i) {
+                uInt8Array[i] = raw.charCodeAt(i);
+            }
+            return new Blob([uInt8Array], {
+                type: contentType
+            });
+        }
+    </script>
+</head>
+
 {% extends 'layout.html' %} {% block content %}
 <div>
-    <h1>Editor</h1>
-    <form action="/signup" method="POST">
+    <h1>Sign Up</h1>
+    <form id="signup_form" action="/signup" method="POST" encType="multipart/form-data">
         <legend> NAME</legend>
         <input type="text" name="username">
         <legend> EMAIL</legend>
         <input type="text" name="email">
         <legend> PASSWORD</legend>
-        <input type="text" name="password">
+        <input type="password" name="password">
         <button type="submit"> 회원가입</button>
     </form>
+    <legend> PROFILE IMAGE </legend>
+    <input id="image_file" type="file" name="raw_profile_image" onchange="getThumbnailPrivew()">
+    <br /><br />
+    <img src="" id="thumbnail">
+
 </div>
 {% endblock %}

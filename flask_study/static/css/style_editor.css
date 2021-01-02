@@ -1,0 +1,18 @@
+#article {
+    width: 95%;
+    height: 500px;
+    background-color: rgba(255, 255, 255, 0.6);
+    color: #260303;
+    margin-bottom: 10px;
+}
+
+#editor_main {
+    padding: 20px;
+    align-content: center;
+}
+
+#title {
+    width: 95%;
+    background-color: rgba(255, 255, 255, 0.6);
+    color: #260303;
+}

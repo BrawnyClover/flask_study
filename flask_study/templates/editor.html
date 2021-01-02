@@ -1,11 +1,18 @@
+<head>
+    <meta charset="utf-8">
+    <title>MainPage</title>
+    <link href="../static/css/style_editor.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+</head>
+
 {% extends 'layout.html' %} {% block head %} {{ super() }} {% endblock %} {% block content %}
 <div id="editor_main">
-    <h1>Editor</h1>
+    <h1>Hello, {{ session['username'] }}</h1>
     <form action="edit_post" method="POST">
         <legend> Title</legend>
-        <input type="text" name="title" style="width:95%">
+        <input id="title" type="text" name="title">
         <legend> Article</legend>
-        <textarea id="article" cols="80" rows="10" type="text" name="article" style="vertical-align:top; width:95%; height:500px; background-color:rgba(255,255,255,0.6); color:#260303">
+        <textarea id="article" cols="80" rows="10" type="text" name="article">
         </textarea>
         <br>
         <button type="submit"> 저장</button>

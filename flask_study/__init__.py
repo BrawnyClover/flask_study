@@ -2,12 +2,17 @@ from flask import Flask, render_template, url_for, request, redirect, session
 from bs4 import BeautifulSoup
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 import datetime
 
 # 웹 서버 생성하기
 app = Flask(__name__)
+
+UPLOAD_DIR = "flask_study\profile_image"
+
 app.config['SECRET_KEY'] = 'flask_study'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['UPLOAD_DIR'] = UPLOAD_DIR
 db = SQLAlchemy(app)
 
 class User(db.Model):
@@ -65,6 +70,7 @@ def login():
             current_user = user
 
     if login_success is True : 
+        # return "<div>"+"login success : " +email+"</div>"+"<div>"+passw+"</div>"
         session['logged_in'] = True
         session['user_email'] = email
         session['username'] = current_user.username
@@ -110,8 +116,12 @@ def signup():
         name = request.form['username']
         email = request.form['email']
         passw = request.form['password']
+        f = request.files['profile_image']
+        fname = secure_filename(f.filename)
+        path = os.path.join(app.config['UPLOAD_DIR'], fname)
+        f.save(path)
 
-        new_user = User(username=name, email=email, password=passw)
+        new_user = User(username=name, email=email, password=passw, profile_image=path)
         try: 
             db.session.add(new_user)
             db.session.commit()
