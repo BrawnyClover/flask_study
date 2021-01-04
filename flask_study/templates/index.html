@@ -22,7 +22,7 @@
                         <p class="text-justify">{{ post.content }}</p>
                     </div>
                     <div class="col-md-2 d-flex flex-column">
-                        <img class="rounded-circle mx-auto" src="{{ url_for('static', filename='sources/' + post.author.profile_image)}}" data-src="holder.js/64x64" width="64px" height="64px">
+                        <img class="rounded-circle mx-auto" src="{{ post.author.profile_image }}" data-src="holder.js/64x64" width="64px" height="64px">
                         <p class="text-muted text-center">{{ post.author.username }}</p>
                     </div>
                 </div>

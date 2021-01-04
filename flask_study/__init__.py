@@ -3,7 +3,9 @@ from bs4 import BeautifulSoup
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-import datetime
+import datetime, base64
+import sys, os, shutil
+from urllib.parse import unquote
 
 # 웹 서버 생성하기
 app = Flask(__name__)
@@ -21,14 +23,15 @@ class User(db.Model):
     username = db.Column(db.String(100), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    profile_image = db.Column(db.String(100), default='default.png')
+    profile_image = db.Column(db.String(100), default=os.path.join(UPLOAD_DIR, 'default.png'))
 
     posts = db.relationship('Post', backref='author', lazy=True)
 
-    def __init__(self, username, email, password, **kwargs):
+    def __init__(self, username, email, password, profile_image, **kwargs):
         self.username = username
         self.email = email
         self.set_password(password)
+        self.profile_image = profile_image
 
     def __repr__(self):
         return f"<User('{self.id}', '{self.username}', '{self.email}')>"
@@ -116,12 +119,20 @@ def signup():
         name = request.form['username']
         email = request.form['email']
         passw = request.form['password']
-        f = request.files['profile_image']
-        fname = secure_filename(f.filename)
-        path = os.path.join(app.config['UPLOAD_DIR'], fname)
-        f.save(path)
+        is_profile_set = request.form.get('is_profile_set')
 
-        new_user = User(username=name, email=email, password=passw, profile_image=path)
+        if is_profile_set is False or "false" :
+            profile_image = "default.png"
+        else :
+            profile_image = name + ".png"
+
+        path = os.path.join(app.config['UPLOAD_DIR'], profile_image)
+        shutil.copyfile(
+            os.path.join(app.config['UPLOAD_DIR'], "temp_profile.png"),  
+            path)
+        
+
+        new_user = User(username=name, email=email, password=passw, profile_image=str(path))
         try: 
             db.session.add(new_user)
             db.session.commit()
@@ -129,4 +140,18 @@ def signup():
             db.session().rollback()
         return redirect(url_for('home'))
 
-    
+
+
+@app.route('/temp_profile_image', methods=['POST'])
+def save_temp_image():
+    raw_data = unquote(request.get_data().decode("utf-8"))
+    starter = raw_data.find(',')
+    ender = raw_data.find("&enctype")
+    image_data = raw_data[starter+1:ender]
+    print("======================================")
+    print(image_data)
+    print("======================================")
+    tmp_profile_image_path = os.path.join(app.config['UPLOAD_DIR'], "temp_profile.png")
+    with open(tmp_profile_image_path, "wb") as fh:
+        fh.write(base64.decodebytes(image_data.encode("utf-8")))
+    return str("success")
