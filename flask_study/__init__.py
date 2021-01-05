@@ -10,7 +10,7 @@ from urllib.parse import unquote
 # 웹 서버 생성하기
 app = Flask(__name__)
 
-UPLOAD_DIR = "flask_study\profile_image"
+UPLOAD_DIR = "\static\profile_image"
 
 app.config['SECRET_KEY'] = 'flask_study'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -73,7 +73,6 @@ def login():
             current_user = user
 
     if login_success is True : 
-        # return "<div>"+"login success : " +email+"</div>"+"<div>"+passw+"</div>"
         session['logged_in'] = True
         session['user_email'] = email
         session['username'] = current_user.username
@@ -120,16 +119,19 @@ def signup():
         email = request.form['email']
         passw = request.form['password']
         is_profile_set = request.form.get('is_profile_set')
-
-        if is_profile_set is False or "false" :
+        if is_profile_set is None :
             profile_image = "default.png"
+            
         else :
             profile_image = name + ".png"
 
-        path = os.path.join(app.config['UPLOAD_DIR'], profile_image)
-        shutil.copyfile(
-            os.path.join(app.config['UPLOAD_DIR'], "temp_profile.png"),  
-            path)
+        path = os.path.join("static/profile_image/", profile_image)
+
+        if is_profile_set is not None :
+            shutil.copyfile(
+            os.path.join("flask_study/static/profile_image/", "temp_profile.png"),  
+            "flask_study/" + path)
+        
         
 
         new_user = User(username=name, email=email, password=passw, profile_image=str(path))
@@ -151,7 +153,7 @@ def save_temp_image():
     print("======================================")
     print(image_data)
     print("======================================")
-    tmp_profile_image_path = os.path.join(app.config['UPLOAD_DIR'], "temp_profile.png")
+    tmp_profile_image_path = os.path.join("flask_study/static/profile_image/", "temp_profile.png")
     with open(tmp_profile_image_path, "wb") as fh:
         fh.write(base64.decodebytes(image_data.encode("utf-8")))
     return str("success")

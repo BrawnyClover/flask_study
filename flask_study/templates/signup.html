@@ -26,7 +26,7 @@
                     canvas.width = 200;
                     canvas.height = 200;
                     var ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, 100, 100);
+                    ctx.drawImage(img, 0, 0, 200, 200);
                     var dataurl = canvas.toDataURL("image/png");
 
                     $("#thumbnail").attr('src', dataurl);
@@ -34,7 +34,7 @@
                     var resizedImage = dataURLToBlob(dataurl);
                     console.log(dataurl);
                     sendBase64Img(dataurl);
-                    document.signup_form.is_profile_set.value = "true";
+                    $("#is_profile_set").prop("checked", true);
                 };
             };
 
@@ -87,7 +87,7 @@
         <input type="text" name="email">
         <legend> PASSWORD</legend>
         <input type="password" name="password">
-        <input type="hidden" id="is_proflie_set" name="is_proflie_set" value="false">
+        <label><input type="checkbox" id="is_profile_set" name="is_profile_set" value="true"> Image Uploaded</label>
         <button type="submit"> 회원가입</button>
     </form>
     <legend> PROFILE IMAGE </legend>
